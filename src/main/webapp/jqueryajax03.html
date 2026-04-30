@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JQuery Ajax 03</title>
+<style>
+
+</style>
+<script src="https://code.jquery.com/jquery.min.js"></script>
+<script>
+/* 현재까지 $.ajax() 로 다 했는데  
+	$.ajax()
+	$.get()
+	$.post()
+	$.getJSON()
+	$.load()
+*/
+	$(function () {
+		let url	=	'https://jsonplaceholder.typicode.com/posts'
+		//	Get Data List
+		$('button').eq(0).on('click', function () {
+			//alert('오타확인')
+			$.ajax({
+				url : url
+			})
+			.done(function (posts) {
+				//console.log(posts)
+				let html = ''
+				$.each(posts, function(index, post) {
+					console.log(post)
+					html += `
+						<ul>
+							<li>userId : ${post.userId}</li>
+							<li>id : ${post.id}</li>
+							<li>title : ${post.title}</li>
+							<li>body : ${post.body}</li>
+						</ul>
+					`
+					}) // each end
+				$('#output').html(html)
+				}) // done end
+			.fail(function (error) {
+				console.log(error)
+			}) // fail end
+		}) // Get Data List button end
+		
+		// Get Data List(Get)
+		// path variable은 get 방식만 가능
+		let url2 = 'https://jsonplaceholder.typicode.com/posts/2'
+		$('button').eq(1).on('click', function () {
+			$.get(url2,  function(result) {
+				console.log(result)
+				alert(result.id + ' : ' +result.title)
+			}) // get end
+		}) // button 2 end
+	}) // function end
+</script>
+</head>
+<body>
+<body>
+	<h2>JQuery Ajax 03</h2>
+	<button>Get Data List</button>
+	<button>Get Data List(Get)</button>
+	<div id="output"></div>
+</body>
+</body>
+</html>

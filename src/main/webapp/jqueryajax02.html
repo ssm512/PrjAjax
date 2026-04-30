@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JQuery Ajax 02</title>
+<style>
+ #div1 {
+ 	  width         : 150px; 
+    border        : 1px solid blue;
+    border-radius : 10px;    
+    padding       : 10px;
+    margin        : 20px; 
+    float         : left;
+ }
+</style>
+<script src="https://code.jquery.com/jquery.min.js"></script>
+<script>
+	$(function () {
+		$('button').on('click', function () {
+			// alert('오타확인')
+			let loc	=	'/data/data.json' // json은 javascript 객체로 옴
+			//let loc	=	'https://jsonplaceholder.typicode.com/posts/1'
+			$.ajax({
+				url : loc
+			}) // ajax end
+			.done(function (result) { // function () {} : 익명함수 이자 콜백함수 임
+				// console.dir(dataList)
+				// alert(dataList)		// 결과 : [object Object]
+				console.log(result) // 배열4개를 묶은 1개의 객체 
+				console.log(result.dataList) // 배열
+				let dataArr = result.dataList
+				let html = ''
+				for (var i = 0; i < dataArr.length; i++) {
+					let data = dataArr[i]
+					html += '<div id="div1">'
+					html += '<h2>' + data.name + '</h2>'
+					html += '<p>' + data.language + '</p>'
+					html += '<p>' + data.age + '</p>'
+					html += '</div>'
+				}
+				
+				
+				/*
+				result.dataList.forEach( function (data, index) {
+					let man = result.dataList[index]
+					html += '<div>'
+					html += '<h2>' + man.name + '</h2>'
+					html += '<p>' + man.language + '</p>'
+					html += '<p>' + man.age + '</p>'
+					html += '</div>'
+				})
+			
+				 
+				$.each(result.dataList, function (index) { // result.dataList 이전에 그냥 result를 사용했었을때 .each 가 동작을 안했음 이유는 위에 있음
+					let man = result.dataList[index]
+					html += '<div>'
+					html += '<h2>' + man.name + '</h2>'
+					html += '<p>' + man.language + '</p>'
+					html += '<p>' + man.age + '</p>'
+					html += '</div>'
+				})
+					*/
+				$('#output').html(html);
+			})
+			.fail(function (error) {
+				console.log(error)
+			})
+		}) // button end
+	}) // function end
+</script>
+</head>
+<body>
+<body>
+	<h2>JQuery Ajax 02</h2>
+	<button>Get Data</button>
+	<a href="/data/data.json">Data</a>
+	<div id="output"></div>
+</body>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JQuery Ajax 01</title>
+<style>
+
+</style>
+<script src="https://code.jquery.com/jquery.min.js"></script>
+<script>
+	$(function () {
+		$('button').on('click', function () { /* button이 클릭되면 함수를 실행해라 */
+			// alert('오타확인')
+			let loc	=	'/data/data.html'
+			/* 1. old 문법
+			$.ajax( {
+				url : loc,
+				// data : {name:'강호동', age:34}, // 서버에 넘겨주는 data, 
+				success : function ( result ) {
+					// alert(result)
+					$('#output').html(result)
+				}, // success일때 수행 함수 end
+				error : function (xhr) {
+					alert(xhr.status + ' : ' + xhr.textStatus)
+				} // error 표시
+			} ) // $.ajax end
+			*/
+			
+			//2. 새로운 $.ajax() - method chaining
+			$.ajax ({
+				url : loc,
+				data : {name:'손흥민'}
+			}) // $.ajax end
+			.done(function (result) {
+				// alert(result)
+				$('#output').html(result)
+			}) // success 역할
+			.fail(function (error) {
+				console.log(error)
+			}) // error 표시
+		}) // button 클릭시 수행할 함수 end
+	}) // function () end
+</script>
+</head>
+<body>
+	<h2>JQuery Ajax 01</h2>
+	<button>Get Data</button>
+	<div id="output"></div>
+</body>
+</html>
