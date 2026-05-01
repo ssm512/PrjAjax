@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * Servlet implementation class Product
  */
 @WebServlet("/product")
-@MultipartConfig
+@MultipartConfig		// 파일도 포함해서 보낸다 설정 추가
 public class Product extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -56,6 +56,8 @@ public class Product extends HttpServlet {
 		out.print(json);
 		out.flush();
 		out.close();
+		
+		System.out.println(map);
 	}
 
 	
@@ -65,10 +67,11 @@ public class Product extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String		name		=	request.getParameter("name");
 		String		language	=	request.getParameter("language");
-		
+
 		map.put(name, language);
 		
 		System.out.println(name + "추가되었습니다.");
+		System.out.println(map);
 		
 		
 	}
