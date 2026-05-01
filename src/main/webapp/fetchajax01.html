@@ -98,7 +98,8 @@
       // 왜 기본적인 form data 예제가 없었을까...
       // form data는 주로 html에서 form 태그로 보내니까 ajax에서는 필요가 없어서 그런가?
     	// 필요할때가 있음, 파일을 보내거나 할 때 필요함, 보내려는 data가 json형태로 변환이 불가능할때
-			const data = { 'title' : '게시글', 'body' : '내용', 'userId': 1 }; // data라는 객체를 만듦
+    	// 일반 spring project에 data를 던질때는 이 방식으로 던져야 함
+			const data = { 'title' : '게시글', 'body' : '내용', 'userId': 1 }; // data라는 객체를 만듦 -> userDTO 로 받음
 			
 			fetch('https://jsonplaceholder.typicode.com/posts', {
 				 method: 'POST', // 또는 'PUT'

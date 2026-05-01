@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Axios01</title>
+<style>
+#comt { 
+border : 1px solid blue; 
+margin : 10px;
+border-radius : 10px;
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.15.2/dist/axios.min.js"></script>
+</head>
+<body>
+	<button>Get Data</button>
+	<div id="output"></div>
+	
+	<!-- Script -->
+	<script>
+		const btnEl = document.querySelector('button')
+		const outputEl = document.querySelector('#output')
+		
+		
+		btnEl.addEventListener('click', function() {
+			//alert('오타확인')
+			//let url = 'https://jsonplaceholder.typicode.com/comments?postId=1'
+			let url = 'https://jsonplaceholder.typicode.com/comments'
+			axios.get(url, {
+				params : {
+					postId : '1',
+					userId : '1'
+				}
+			}) // axios end
+			.then(function (res) {
+				console.log(res)
+				let html =''
+				
+				let comments = res.data;
+				comments.forEach( function (comment, i) {
+					html += `
+						<div id="comt">
+							<h2>id : ${comment.id}</h2>
+							<p>name : ${comment.name}</p>
+							<p>body : ${comment.body}</p>
+						</div>
+					`
+				}) // dataList.forEach end
+				
+				outputEl.innerHTML = html
+			} )
+			.catch(function (error) {
+				console.log(error)
+			})
+		}) // btn click function end
+	</script>
+</body>
+</html>

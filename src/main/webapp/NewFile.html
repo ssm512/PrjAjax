@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WEHAGO 가입하기</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #f4f5f7;
+      font-family: Arial, 'Noto Sans KR', sans-serif;
+      color: #222;
+    }
+
+    .page-wrap {
+      width: 360px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .top-banner {
+      height: 84px;
+      background: linear-gradient(135deg, #2f6dff, #4b84ff);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      padding: 26px 24px;
+    }
+
+    .top-banner h1 {
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.5px;
+    }
+
+    .banner-card {
+      position: absolute;
+      right: 18px;
+      top: 24px;
+      width: 96px;
+      height: 42px;
+      background: rgba(255, 255, 255, 0.25);
+      border: 2px solid rgba(255, 255, 255, 0.75);
+      border-radius: 4px;
+    }
+
+    .banner-card::before,
+    .banner-card::after {
+      content: '';
+      position: absolute;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 2px;
+    }
+
+    .banner-card::before {
+      width: 25px;
+      height: 16px;
+      left: 8px;
+      top: 10px;
+    }
+
+    .banner-card::after {
+      width: 45px;
+      height: 4px;
+      right: 9px;
+      top: 12px;
+      box-shadow: 0 10px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    .cursor {
+      position: absolute;
+      right: 12px;
+      top: 41px;
+      width: 0;
+      height: 0;
+      border-top: 14px solid #ffd84a;
+      border-right: 8px solid transparent;
+      border-left: 8px solid transparent;
+      transform: rotate(-35deg);
+      filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.25));
+    }
+
+    .steps {
+      display: flex;
+      justify-content: space-between;
+      padding: 13px 25px 18px;
+      border-bottom: 1px solid #eee;
+      font-size: 8px;
+      color: #aaa;
+      text-align: center;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      left: 43px;
+      right: 43px;
+      top: 24px;
+      border-top: 1px dashed #ddd;
+    }
+
+    .step {
+      position: relative;
+      width: 58px;
+      z-index: 1;
+    }
+
+    .step-num {
+      display: block;
+      font-size: 9px;
+      color: #9aa6b2;
+      margin-bottom: 4px;
+      background: #fff;
+    }
+
+    .step.active .step-num,
+    .step.active {
+      color: #1687ff;
+      font-weight: 700;
+    }
+
+    .form-area {
+      width: 210px;
+      margin: 17px auto 0;
+    }
+
+    .title {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .title h2 {
+      font-size: 13px;
+      margin-bottom: 5px;
+      font-weight: 700;
+    }
+
+    .title p {
+      font-size: 8px;
+      color: #777;
+    }
+
+    .form-group {
+      margin-bottom: 9px;
+    }
+
+    label {
+      display: block;
+      font-size: 8px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .input-box {
+      position: relative;
+    }
+
+    input {
+      width: 100%;
+      height: 24px;
+      border: 1px solid #c9e8d8;
+      border-radius: 2px;
+      padding: 0 24px 0 8px;
+      font-size: 8px;
+      outline: none;
+      background: #fff;
+    }
+
+    input[readonly] {
+      background: #eee;
+      border-color: #ddd;
+      color: #777;
+    }
+
+    input:focus {
+      border-color: #00a66c;
+    }
+
+    .check-icon {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #1bbf83;
+      color: #fff;
+      font-size: 7px;
+      line-height: 10px;
+      text-align: center;
+    }
+
+    .mail-icon {
+      position: absolute;
+      right: 7px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #0a9a72;
+      font-size: 10px;
+    }
+
+    .hint {
+      font-size: 7px;
+      color: #00a66c;
+      margin-top: 2px;
+    }
+
+    .gray-hint {
+      font-size: 7px;
+      color: #888;
+      line-height: 1.4;
+      margin-top: 3px;
+    }
+
+    .btn-area {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 18px;
+      padding-bottom: 25px;
+    }
+
+    button {
+      width: 30px;
+      height: 19px;
+      border: 1px solid #ddd;
+      background: #fff;
+      color: #777;
+      font-size: 8px;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+
+    button.next {
+      width: 29px;
+      background: #1687ff;
+      border-color: #1687ff;
+      color: #fff;
+    }
+
+    button:hover {
+      opacity: 0.85;
+    }
+
+    .error {
+      border-color: #ff5a5a !important;
+    }
+
+    .error-msg {
+      display: none;
+      font-size: 7px;
+      color: #ff5a5a;
+      margin-top: 2px;
+    }
+
+    .form-group.invalid .error-msg {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+    <header class="top-banner">
+      <h1>WEHAGO 가입하기</h1>
+      <div class="banner-card"></div>
+      <div class="cursor"></div>
+    </header>
+
+    <nav class="steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        약관동의
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        본인인증
+      </div>
+      <div class="step active">
+        <span class="step-num">03</span>
+        회원정보입력
+      </div>
+      <div class="step">
+        <span class="step-num">04</span>
+        가입완료
+      </div>
+      <div class="step">
+        <span class="step-num">05</span>
+        서비스 이용준비 완료
+      </div>
+    </nav>
+
+    <main class="form-area">
+      <div class="title">
+        <h2>회원정보입력</h2>
+        <p>회원님 정보를 입력해주세요.</p>
+      </div>
+
+      <form id="joinForm">
+        <div class="form-group">
+          <label for="userId">* 아이디</label>
+          <div class="input-box">
+            <input id="userId" type="text" value="doouser07" />
+            <span class="check-icon">✓</span>
+          </div>
+          <p class="hint">사용 가능한 아이디입니다.</p>
+        </div>
+
+        <div class="form-group">
+          <label for="password">* 비밀번호</label>
+          <div class="input-box">
+            <input id="password" type="password" value="12345678" />
+            <span class="check-icon">✓</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="passwordCheck">* 비밀번호 확인</label>
+          <div class="input-box">
+            <input id="passwordCheck" type="password" value="12345678" />
+            <span class="check-icon">✓</span>
+          </div>
+          <p class="error-msg">비밀번호가 일치하지 않습니다.</p>
+        </div>
+
+        <div class="form-group">
+          <label for="companyName">* 회사명</label>
+          <input id="companyName" type="text" readonly value="더존비즈온" />
+        </div>
+
+        <div class="form-group">
+          <label for="businessNumber">* 사업자등록번호</label>
+          <input id="businessNumber" type="text" readonly value="123-81-12345" />
+          <p class="gray-hint">정보는 인증과정을 통해 자동으로 입력됩니다.</p>
+        </div>
+
+        <div class="form-group">
+          <label for="email">* 이메일 주소</label>
+          <div class="input-box">
+            <input id="email" type="email" value="sample@wehago.com" />
+            <span class="mail-icon">✉</span>
+          </div>
+          <p class="hint">사용 가능한 이메일입니다.</p>
+        </div>
+
+        <div class="btn-area">
+          <button type="button">이전</button>
+          <button type="submit" class="next">다음</button>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <script>
+    const form = document.querySelector('#joinForm');
+    const password = document.querySelector('#password');
+    const passwordCheck = document.querySelector('#passwordCheck');
+    const passwordCheckGroup = passwordCheck.closest('.form-group');
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      if (password.value !== passwordCheck.value) {
+        passwordCheck.classList.add('error');
+        passwordCheckGroup.classList.add('invalid');
+        return;
+      }
+
+      passwordCheck.classList.remove('error');
+      passwordCheckGroup.classList.remove('invalid');
+      alert('다음 단계로 이동합니다.');
+    });
+  </script>
+</body>
+</html>

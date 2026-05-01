@@ -30,7 +30,7 @@
 			// 서버에서 가져온다 : Get 방식으로
 			let url = 'http://apis.data.go.kr/6260000/fbusangmgtourinfo/getgmgtourinfo'
 			url 		+= '?ServiceKey=23c09efc86c9a031126a655710f485d14d145c75d8734d7acd4459e8101e7743' // 발급받은 개인 인증키
-			url			+= '&numOfRows=10'
+			url			+= '&numOfRows=10'		// 한 페이지에 몇개의 자료를 조회
 			url			+= '&pageNo='+pageEl.value
 			url			+= '&resultType=json'
 			fetch (url)
@@ -40,6 +40,7 @@
 					
 					//outputEl.innerHTML=JSON.stringify(json)
 					let itemList = json.response.body.items.item
+					// 조회한 data로 마지막 페이지 번호를 생성
 					let totalCount	 =  parseInt(json.response.body.totalCount)
 					let numOfRows   =  parseInt(json.response.body.numOfRows)
 					let	maxPage			= Math.ceil(totalCount / numOfRows)

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Axios02</title>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.15.2/dist/axios.min.js"></script>
+</head>
+<body>
+	<input type="text" id="name" value="유재석" />
+	<button>Get Data</button>
+	<div id="output"></div>
+	
+	<script>
+		// http://localhost:8080/product?name=%EC%84%9C%EC%9E%A5%ED%9B%88
+		const txtEl = document.querySelector("#name")
+		const btnEl = document.querySelector('button')
+		const outputEl = document.querySelector('#output')
+		
+		// http://localhost:8080/product?name=신동엽
+		btnEl.addEventListener('click', function () {
+			//alert('오타확인')
+			//let url = 
+			axios({
+				url : 'http://localhost:8080/product', // 통신할 문서
+				method : 'get', // 통신할 방식
+				params : { // 인자로 보낼 데이터 ?name=
+					name : txtEl.value
+				} 	
+			}) // axios get end
+				.then(response => {
+					console.dir(response)
+					let jsonObj = response.data
+					
+					let name = jsonObj.name
+					let language = jsonObj.language
+					
+					outputEl.innerHTML = "<div>" + name + "," + language + "</div>"
+					alert(response)
+				})
+				.catch(error => console.log(error));
+		}) // btnEl click function end
+	</script>
+</body>
+</html>

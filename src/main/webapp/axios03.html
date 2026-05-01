@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Axios03</title>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.15.2/dist/axios.min.js"></script>
+</head>
+<body>
+	<h2>회원등록</h2>
+	<input type="text" id="name" value="장원영" />
+	<input type="text" id="language" value="ive" />
+	<button id="add">회원 등록</button>
+	<div id="div1"></div>
+	<hr />
+	<h2>회원조회</h2>
+	<input type="text" id="name2" value="장원영" />
+	<button id="get">회원조회</button>
+	<div id="div2"></div>	
+	
+	<!--  -->
+	<script>
+		/// 함수
+		function addProduct() {
+			const nameEl = document.querySelector("#name")
+			const languageEl = document.querySelector("#language")
+			const url			=	'http://localhost:8080/product'
+			
+			const formData	=	new	FormData();
+			formData.append("name", nameEl.value)
+			formData.append("language", languageEl.value)
+			//formData.append("pic", file)
+			
+			const	config	=	{
+				header : {
+					"content-type" : "multipart/form-data"
+				} // header end
+			} // config ent
+			return	axios.post(url, formData, config);
+		}
+		
+		
+		// 등록처리
+		const addbtnEl = document.querySelector('#add')
+		const div1El = document.querySelector('#div1')
+		
+		// 조회
+		const getbtnEl = document.querySelector('#get')
+		const div2El = document.querySelector('#div2')
+		const name2El	=	document.querySelector('#name2')
+		
+		getbtnEl.addEventListener('click', function () {
+			const url = 'http://localhost:8080/product'
+			
+			axios({
+				url : url,
+				method : 'get',
+				params : {
+					name : name2El.value
+				}
+			}) // axios end
+			.then(response => {
+				let name				=	response.data.name
+				let language		=	response.data.language
+				div2El.innerHTML = name+ ' : ' + language
+			})
+			.catch(error => console.log(error))
+		}) //getbtnEl end
+		
+		
+		// http://localhost:8080/product : Post 방식호출
+		addbtnEl.addEventListener('click', function () {
+			//alert('오타확인')
+		 	addProduct();
+		})
+	</script>
+</body>
+</html>
