@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>busanWalkingPath</title>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.15.2/dist/axios.min.js"></script>
+</head>
+<body>
+	<h2>부산도보여행 소개</h2>
+	보고싶은 페이지<input type="number" id="page" value="1" min="1" max="" />
+	<button id="get">Get Data</button>
+	<div id="output"></div>
+	
+	<script>
+	const btn1El = document.querySelector('#get')
+	const outputEl = document.querySelector('#output')
+	const page1El = document.querySelector('#page')
+	
+	btn1El.addEventListener('click', function () {
+		let url = 'http://apis.data.go.kr/6260000/WalkingService/getWalkingKr'
+		url += '?serviceKey=23c09efc86c9a031126a655710f485d14d145c75d8734d7acd4459e8101e7743'
+		url += '&numOfRows=10'
+		url += '&pageNo='+page1El.value
+		url += '&resultType=json'
+		axios({
+			url : url,
+			method : 'get'
+		}) // axios end
+		.then(response => {
+			//console.dir(response)
+			let jsonObj = response.data.getWalkingKr.item
+			//console.log(jsonObj)
+			//조회한 data로 마지막 페이지 번호를 생성
+			let totalCount = response.data.getWalkingKr.totalCount
+			let numOfRows	 = response.data.getWalkingKr.numOfRows
+			let maxPage		 = Math.ceil(totalCount/numOfRows)
+			
+			dataDisplay(jsonObj)
+		})
+		.catch(error => console.log(error))
+	}) // btn1El click function end
+	
+	function dataDisplay(jsonObj) {
+		let html = ''
+			jsonObj.forEach(function (item, i) {
+				html += `
+					<ul>
+				  	<li>콘텐츠명 : ${item.MAIN_TITLE}</li>
+				  	<li>구분 : ${item.CATE2_NM}</li>
+				  	<li>장소 : ${item.PLACE}</li>
+				  	<li>제목 : ${item.TITLE}</li>
+				  	<li>부제목 : ${item.SUBTITLE}</li>
+				  	<li>교통정보 : ${item.TRFC_INFO}</li>
+				  	<li>상세정보 : ${item.ITEMCNTNTS}</li>
+				  	<li>썸네일이미지<img src="https://www.visitbusan.net${item.MAIN_IMG_THUMB}" /></li>
+				  	<li>메인이미지<img src="https://www.visitbusan.net${item.MAIN_IMG_NORMAL}" /></li>
+					</ul>
+				`
+			}) // jsonObj.forEach 익명함수 end
+			outputEl.innerHTML=html
+	} // dataDisplay function end
+	</script>
+</body>
+</html>
